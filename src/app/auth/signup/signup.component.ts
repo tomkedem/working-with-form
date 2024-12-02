@@ -14,18 +14,24 @@ export class SignupComponent {
     email: new FormControl('',{
       validators: [ Validators.email, Validators.required]
     }),
-    password: new FormControl('',{
-      validators: [ Validators.required, Validators.minLength(6)]      
+    passwords: new FormGroup({
+      password: new FormControl('',{
+        validators: [ Validators.required, Validators.minLength(6)]      
+      }),
+      confirmPassword: new FormControl('',{
+        validators: [ Validators.required, Validators.minLength(6)]      
+      }),
     }),
-    confirmPassword: new FormControl('',{
-      validators: [ Validators.required, Validators.minLength(6)]      
-    }),
+  
     firstName: new FormControl('', { validators: [Validators.required]}),
     lastName: new FormControl('', { validators: [Validators.required]}),
-    street: new FormControl('', { validators: [Validators.required]}),
-    number: new FormControl('', { validators: [Validators.required]}),
-    postalCode: new FormControl('', { validators: [Validators.required]}),
-    city: new FormControl('', { validators: [Validators.required]}),
+    address: new FormGroup({
+      street: new FormControl('', { validators: [Validators.required]}),
+      number: new FormControl('', { validators: [Validators.required]}),
+      postalCode: new FormControl('', { validators: [Validators.required]}),
+      city: new FormControl('', { validators: [Validators.required]}),
+    }),
+    
     role: new FormControl<'student'| 'teacher' | 'employee' | 'founder' | 'other'>
     ('student', { validators: [Validators.required]}),
     agree: new FormControl(false, { validators: [Validators.required]})
@@ -33,8 +39,9 @@ export class SignupComponent {
   onSubmit(){
     console.log('myForm', this.form);
     const enteredEmail =  this.form.value.email;
-    const enteredPassword =  this.form.value.password;
-    console.log(enteredPassword + ',' ,enteredEmail);
+    const enteredPassword =  this.form.value.passwords?.password;
+    const enteredConfirmPassword =  this.form.value.passwords?.confirmPassword;
+    console.log(enteredPassword + ',' + enteredEmail + ',' + enteredConfirmPassword);
     
   }
   onReset(){
