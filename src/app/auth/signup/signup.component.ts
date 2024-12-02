@@ -42,6 +42,10 @@ export class SignupComponent {
     agree: new FormControl(false, { validators: [Validators.required]})
   });
   onSubmit(){
+    if(this.form.invalid){
+      console.log('INVALID FORM');      
+      return;
+    }
     console.log('myForm', this.form);
     const enteredEmail =  this.form.value.email;
     const enteredPassword =  this.form.value.passwords?.password;
