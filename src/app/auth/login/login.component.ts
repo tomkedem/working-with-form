@@ -14,6 +14,16 @@ export class LoginComponent {
   private destroyRef = inject(DestroyRef)
   constructor(){
     afterNextRender(() =>{
+      
+      const savedForm = window.localStorage.getItem('save-login-form');
+      if (savedForm){
+        const loadedFormData = JSON.parse(savedForm)
+        const savedEmail = loadedFormData.email;
+        setTimeout(()=>{
+          this.form().controls['email'].setValue(savedEmail);
+        }, 1);       
+      }
+
       const subscription = this.form().valueChanges?.pipe(debounceTime(500)).subscribe({
         next: (value) => 
           window.localStorage.setItem(
